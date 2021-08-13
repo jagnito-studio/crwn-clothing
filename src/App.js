@@ -3,6 +3,7 @@ import { Switch, Route, Link } from 'react-router-dom';
 import './App.css';
 
 import HomePage from './pages/homepage/homepage.component';
+import ShopPage from './pages/shop/shop.component';
 
 // props can show more info of the route component
 const HatsPage = (props) => (
@@ -33,7 +34,8 @@ function App() {
         {/* Parameter is supported - <Route path='/topics/:topicId' component={TopicDetails} />*/}
 
         <Route exact path='/' component={HomePage} />
-        <Route path='/shop/hats' component={HatsPage} />
+        <Route exact path='/shop' component={ShopPage} />
+        {/* <Route path='/shop/hats' component={HatsPage} /> */}
       </Switch>
     </div>
   );

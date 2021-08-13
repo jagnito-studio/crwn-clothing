@@ -10,6 +10,7 @@
     margin: 0 7.5px 15px;
     overflow: hidden; // not allow bg image grow over border
 
+    // Enlarge background image in hover
     &:hover {
       cursor: pointer;
 
@@ -52,7 +53,7 @@
       border: 1px solid black;
       background-color: white;
       opacity: 0.7;
-      position: absolute; // place it in center
+      position: absolute; // place it back in center
   
       .title {
         font-weight: bold;
