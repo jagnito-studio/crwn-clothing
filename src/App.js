@@ -4,6 +4,7 @@ import './App.css';
 
 import HomePage from './pages/homepage/homepage.component';
 import ShopPage from './pages/shop/shop.component';
+import Header from './components/header/header.component';
 
 // props can show more info of the route component
 const HatsPage = (props) => (
@@ -27,6 +28,9 @@ const HatsPage = (props) => (
 function App() {
   return (
     <div>
+      {/* Put it outside of Switch so it is always here */}
+      <Header />
+
       {/* Switch will only show the 1st matched component */}
       <Switch>
         {/* <Route exact={false} path='/' component={HomePage} /> 
@@ -34,7 +38,7 @@ function App() {
         {/* Parameter is supported - <Route path='/topics/:topicId' component={TopicDetails} />*/}
 
         <Route exact path='/' component={HomePage} />
-        <Route exact path='/shop' component={ShopPage} />
+        <Route path='/shop' component={ShopPage} />
         {/* <Route path='/shop/hats' component={HatsPage} /> */}
       </Switch>
     </div>
