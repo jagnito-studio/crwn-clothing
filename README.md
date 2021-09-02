@@ -5,6 +5,7 @@ This is the E-commerce site from Udemy course: [Complete react Developer Zero to
 Unzip the source and run `yarn` to install all package. Then run `yarn start`
 To use npm, delete `yarn.lock` and run `npm install`
 
-## Pages
-- Homepage "/"
-- Shopping list "/shop"
+## Change Logs
+- Include `react-router-dom` to separate Homepage and /shop page
+- Include a header, with a SVG logo
+- Sign up form with input and button component

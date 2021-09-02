@@ -4,7 +4,10 @@ import './App.css';
 
 import HomePage from './pages/homepage/homepage.component';
 import ShopPage from './pages/shop/shop.component';
+import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up.component';
 import Header from './components/header/header.component';
+
+import { auth } from './firebase/firebase.utils';
 
 // props can show more info of the route component
 const HatsPage = (props) => (
@@ -25,24 +28,49 @@ const HatsPage = (props) => (
   </div>
 )
 
-function App() {
-  return (
-    <div>
-      {/* Put it outside of Switch so it is always here */}
-      <Header />
+class App extends React.Component {
+  constructor() {
+    super();
 
-      {/* Switch will only show the 1st matched component */}
-      <Switch>
-        {/* <Route exact={false} path='/' component={HomePage} /> 
-            ALL matched components will be shown, unless an exact parameter is used */}
-        {/* Parameter is supported - <Route path='/topics/:topicId' component={TopicDetails} />*/}
+    this.state = {
+      currentUser: null
+    }
+  }
 
-        <Route exact path='/' component={HomePage} />
-        <Route path='/shop' component={ShopPage} />
-        {/* <Route path='/shop/hats' component={HatsPage} /> */}
-      </Switch>
-    </div>
-  );
+  unsubscribeFromAuth = null
+
+  componentDidMount() {
+    this.unsubscribeFromAuth = auth.onAuthStateChanged(user => {
+      this.setState({ currentUser: user });
+
+      console.log(user);
+    })
+  }
+
+  componentWillUnmount() {
+    this.unsubscribeFromAuth();
+  }
+
+  render() {
+    return (
+      <div>
+        {/* Put it outside of Switch so it is always here */}
+        <Header currentUser={this.state.currentUser} />
+  
+        {/* Switch will only show the 1st matched component */}
+        <Switch>
+          {/* <Route exact={false} path='/' component={HomePage} /> 
+              ALL matched components will be shown, unless an exact parameter is used */}
+          {/* Parameter is supported - <Route path='/topics/:topicId' component={TopicDetails} />*/}
+  
+          <Route exact path='/' component={HomePage} />
+          <Route path='/shop' component={ShopPage} />
+          <Route path='/signin' component={SignInAndSignUpPage} />
+          {/* <Route path='/shop/hats' component={HatsPage} /> */}
+        </Switch>
+      </div>
+    );
+  }  
 }
 
 export default App;
