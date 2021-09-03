@@ -1,5 +1,6 @@
 import { initializeApp } from 'firebase/app';
-import { getFirestore } from "firebase/firestore";
+import { getFirestore, collection, doc, getDoc, setDoc } from "firebase/firestore";
+
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 
 const config = {
@@ -11,6 +12,37 @@ const config = {
     appId: "1:382737986447:web:e44c3bffad5fbd122111fa",
     measurementId: "G-NJF70NBTN0"
 };
+
+
+export const createUserProfileDocument = async (userAuth, additionalData) => {
+    if (!userAuth) return;
+
+    // console.log(userAuth);
+
+    //console.log(firestore.doc('users/n3yz1YhIiDNgIYf0EtLO'));
+    const userRef = doc(collection(firestore, "users"), `${userAuth.uid}`);
+    // console.log(userRef);
+
+    const snapShot = await getDoc(userRef);
+    // console.log(snapShot);
+
+    if (!snapShot.exists()) {
+        const { displayName, email } = userAuth;
+        const createdAt = new Date();
+        try {
+            await setDoc(userRef, {
+                displayName, 
+                email, 
+                createdAt,
+                ...additionalData
+            })
+        } catch (error) {
+            console.log('error creating user', error.message);
+        }
+    }
+
+    return userRef;
+}
 
 const app = initializeApp(config);
 
